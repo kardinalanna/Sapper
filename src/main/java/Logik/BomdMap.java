@@ -1,6 +1,6 @@
 package Logik;
 
-public class BomdMap {
+class BomdMap {
     private MatrixOfField bombMatrix;
     private int bombNumber;
 
@@ -10,7 +10,7 @@ public class BomdMap {
         if (bombNumber > limit) bombNumber = limit;
     }
 
-    void StartPlaceBomb() { //рандомно распалагаем бомбы, получая случайные координаты из Field
+    void startPlaceBomb() { //рандомно распалагаем бомбы, получая случайные координаты из Field
         bombMatrix = new MatrixOfField(ImageStorage.zero);
         for (int i = 0; i < bombNumber; i++) {
             while (true) {
@@ -28,7 +28,7 @@ public class BomdMap {
         }
     }
 
-    public ImageStorage getFromBombMap(Coord coord) {
+    ImageStorage getFromBombMap(Coord coord) {
         return bombMatrix.getPictureOnPosition(coord);
     }
 }

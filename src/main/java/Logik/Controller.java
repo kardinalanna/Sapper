@@ -2,7 +2,7 @@ package Logik;
 
 //реализует связь между логикой и отрисовкой
 public class Controller {
-    private BomdMap bomdMap;
+    BomdMap bomdMap;
     private FlagMap flagMap;
     private State state;
     private int countOfBomb;
@@ -15,7 +15,7 @@ public class Controller {
     }
 
     public void start() { //ключевой метод, запускающийся в DialogWithUser! Именно с него начинается логика!
-        bomdMap.StartPlaceBomb(); //в класск BombMap разбрасываем бомбы и окружаем их цифрами
+        bomdMap.startPlaceBomb(); //в класск BombMap разбрасываем бомбы и окружаем их цифрами
         flagMap.startFlagging(); //верхнее поле сначала полность состоит из closed
         state = State.playing;//определяем состояние, которое будет playing пока не выполнится условие для winner или bombed
     }

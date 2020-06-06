@@ -1,26 +1,15 @@
-import Logik.Controller;
-import Logik.Coord;
-import Logik.Field;
-import Logik.ImageStorage;
+import Logik.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
-import javafx.scene.text.Text;
-
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 import java.io.InputStream;
-import java.net.URL;
 
 public class ViewClascc extends Application {
     private Controller controller;
@@ -42,29 +31,31 @@ public class ViewClascc extends Application {
         paintPicture();
         primaryStage.getIcons().add(getPicture("icon"));
         primaryStage.setTitle("Sapper");
-        primaryStage.setScene(initScene());
-        initScene().setOnMouseClicked(listener);
-        primaryStage.show();
-    }
-
-    private Scene initScene() {
-        GridPane root = new GridPane();
+        final GridPane root = new GridPane();
         for (Coord coord : Field.getListOfAllCoords()) {
             ImageView image = new ImageView((Image) controller.getPictureFromImageStorage(coord).picture);
             root.add(image, coord.y, coord.x);
         }
-        Scene show = new Scene(root, columns * sizeOfPicture, rows * sizeOfPicture);
-        return show;
+        Scene scene = new Scene(root, columns * sizeOfPicture, rows * sizeOfPicture+ 26);
+        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                Coord coord = new Coord((int) event.getSceneY() / sizeOfPicture, (int) event.getSceneX() / sizeOfPicture);
+                if (event.getButton().equals(MouseButton.PRIMARY)) controller.presButton1(coord);
+                if (event.getButton().equals(MouseButton.SECONDARY)) controller.presButton3(coord);
+                initScene(root);
+
+            }
+        });
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
-    private EventHandler<MouseEvent> listener = new EventHandler<MouseEvent>() {
-        public void handle(MouseEvent event) {
-            Coord coord = new Coord((int) event.getSceneX() / sizeOfPicture, (int) event.getSceneY() / sizeOfPicture);
-            if (event.getButton().equals(MouseButton.PRIMARY)) controller.presButton1(coord);
-            if (event.getButton().equals(MouseButton.SECONDARY)) controller.presButton3(coord);
-            initScene();
+    private void initScene(GridPane pane) {
+        for (Coord coord : Field.getListOfAllCoords()) {
+            ImageView image = new ImageView((Image) controller.getPictureFromImageStorage(coord).picture);
+            pane.add(image, coord.y, coord.x);
         }
-    };
+       }
 
     private Image getPicture(String name) {
         InputStream it = getClass().getResourceAsStream(name + ".png");
