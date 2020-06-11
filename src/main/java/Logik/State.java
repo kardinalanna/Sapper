@@ -1,6 +1,6 @@
 package Logik;
 
-//состояния инры
+//состояния игры
 public enum State {
     playing,
     bombed,

@@ -1,5 +1,7 @@
 package Logik;
 
+import javafx.scene.image.Image;
+
 //кдасс-перечисление, содержащий имена наших картинок (в логической части выступает как строка(имя), в диалоговой части реализуется в картинку из ресурсов
 public enum ImageStorage {
     zero,
@@ -16,7 +18,7 @@ public enum ImageStorage {
     bombed,
     nobomb;
 
-    public Object picture; //объект, чтобы не привязываться к определенному типу (модель реализует лишь логику без диалога с рользователем), при запуске ViewClass.Start() заполняется картинками Image
+    public Image picture; //объект, чтобы не привязываться к определенному типу (модель реализует лишь логику без диалога с рользователем), при запуске ViewClass.Start() заполняется картинками Image
 
     ImageStorage nextImage() {
         return ImageStorage.values()[this.ordinal() + 1];
